@@ -12,6 +12,7 @@ public class Track {
     private boolean mIsStreamable;
     private String mDownloadUrl;
     private String mStreamUrl;
+    private String mArtist;
 
     private Track(Builder builder) {
         mId = builder.mId;
@@ -25,6 +26,7 @@ public class Track {
         mIsStreamable = builder.mIsStreamable;
         mDownloadUrl = builder.mDownloadUrl;
         mStreamUrl = builder.mStreamUrl;
+        mArtist = builder.mArtist;
     }
 
     public int getId() {
@@ -115,6 +117,14 @@ public class Track {
         mStreamUrl = streamUrl;
     }
 
+    public String getArtist() {
+        return mArtist;
+    }
+
+    public void setArtist(String artist) {
+        mArtist = artist;
+    }
+
     public static class Builder {
         private int mId;
         private int mUserId;
@@ -127,6 +137,7 @@ public class Track {
         private boolean mIsStreamable;
         private String mDownloadUrl;
         private String mStreamUrl;
+        private String mArtist;
 
 
         public Builder setId(int id) {
@@ -181,6 +192,10 @@ public class Track {
 
         public Builder setStreamUrl(String streamUrl) {
             mStreamUrl = streamUrl;
+            return this;
+        }
+        public Builder setArtist(String artist) {
+            mArtist = artist;
             return this;
         }
 
