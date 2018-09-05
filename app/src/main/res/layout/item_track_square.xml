@@ -2,7 +2,8 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/dp_128"
-    android:layout_height="@dimen/dp_196">
+    android:layout_height="@dimen/dp_196"
+    android:layout_margin="@dimen/dp_4">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_128"
             android:scaleType="centerCrop"
+            android:src="@drawable/image_default_artwork"
             tools:ignore="ContentDescription" />
 
         <TextView

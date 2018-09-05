@@ -8,4 +8,5 @@ public class Constants {
     public static final String GENRE_CLASSICAL = "Classical";
     public static final String GENRE_COUNTRY = "Country";
     public static final String NULL = "null";
+    public static final String ARGUMENT_GENRE_URL = "argument_genre_url";
 }
