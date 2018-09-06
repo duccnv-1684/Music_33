@@ -1,5 +1,6 @@
 package com.framgia.nguyenvanducc.soundcloud33.data.source.remote;
 
+
 import com.framgia.nguyenvanducc.soundcloud33.data.model.Track;
 import com.framgia.nguyenvanducc.soundcloud33.data.source.OnLoadDataCompleteListener;
 import com.framgia.nguyenvanducc.soundcloud33.data.source.TrackDataSource;
@@ -18,9 +19,16 @@ public class TrackRemoteDataSource implements TrackDataSource.RemoteDataSource {
     }
 
     @Override
-    public void getTrackOfGenre(String genre, int limit, int offset
-            , OnLoadDataCompleteListener<Track> trackOnLoadDataCompleteListener) {
-        new GetTrackFromUrlTask(trackOnLoadDataCompleteListener)
+    public void getTrackOfGenre(String genre, int limit, int offset,
+                                OnLoadDataCompleteListener<Track> listener) {
+        new GetTrackFromUrlTask(listener)
                 .execute(StringUtils.buildGetTrackByGenreUrl(genre, limit, offset));
+    }
+
+    @Override
+    public void getTrackFromSearch(String queryString, int limit, int offset,
+                                   OnLoadDataCompleteListener<Track> listener) {
+        new SearchTrackFromUrlTask(listener)
+                .execute(StringUtils.buildSearchTrackUrl(queryString, limit, offset));
     }
 }

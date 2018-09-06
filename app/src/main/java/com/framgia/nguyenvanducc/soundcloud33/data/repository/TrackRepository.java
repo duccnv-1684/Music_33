@@ -19,17 +19,22 @@ public class TrackRepository
     }
 
     public static synchronized TrackRepository getInstance(
-            TrackLocalDataSource trackLocalDataSource
-            , TrackRemoteDataSource trackRemoteDataSource) {
+            TrackLocalDataSource local,
+            TrackRemoteDataSource remote) {
         if (sTrackRepository == null)
-            sTrackRepository = new TrackRepository(trackLocalDataSource, trackRemoteDataSource);
+            sTrackRepository = new TrackRepository(local, remote);
         return sTrackRepository;
     }
 
     @Override
     public void getTrackOfGenre(String genre, int limit, int offset,
-                                OnLoadDataCompleteListener<Track> trackOnLoadDataCompleteListener) {
-        mTrackRemoteDataSource.getTrackOfGenre(genre, limit
-                , offset, trackOnLoadDataCompleteListener);
+                                OnLoadDataCompleteListener<Track> listener) {
+        mTrackRemoteDataSource.getTrackOfGenre(genre, limit, offset, listener);
+    }
+
+    @Override
+    public void getTrackFromSearch(String queryString, int limit, int offset,
+                                   OnLoadDataCompleteListener<Track> listener) {
+        mTrackRemoteDataSource.getTrackFromSearch(queryString, limit, offset, listener);
     }
 }

@@ -10,5 +10,8 @@ public interface TrackDataSource {
     interface RemoteDataSource {
         void getTrackOfGenre(String genre, int limit, int offset
                 , OnLoadDataCompleteListener<Track> trackOnLoadDataCompleteListener);
+
+        void getTrackFromSearch(String queryString, int limit, int offset
+                , OnLoadDataCompleteListener<Track> trackOnLoadDataCompleteListener);
     }
 }
