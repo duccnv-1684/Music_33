@@ -35,13 +35,15 @@ public class HomeFragment extends BaseFragment implements HomeContract.View
 
     public HomeFragment() {
         TrackRepository trackRepository = TrackRepository.getInstance(
-                TrackLocalDataSource.getInstance(), TrackRemoteDataSource.getInstance());
+                TrackLocalDataSource.getInstance(getContext().getContentResolver()),
+                TrackRemoteDataSource.getInstance());
         GenreRepository genreRepository = GenreRepository.getInstance(
                 GenreLocalDataSource.getInstance(), GenreRemoteDataSource.getInstance());
         mPresenter = new HomePresenter(trackRepository, genreRepository);
         mPresenter.setView(this);
     }
-    public void setOnGenreDetailSelectListener(OnGenreDetailSelectListener listener){
+
+    public void setOnGenreDetailSelectListener(OnGenreDetailSelectListener listener) {
         this.mOnGenreDetailSelectListener = listener;
     }
 
@@ -82,11 +84,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.View
 
     @Override
     public void switchToGenreDetail(String genreName, String genreUrl) {
-        mOnGenreDetailSelectListener.showGenreDetail(genreName,genreUrl);
+        mOnGenreDetailSelectListener.showGenreDetail(genreName, genreUrl);
 
     }
 
-    public interface OnGenreDetailSelectListener{
-        void showGenreDetail(String genreName,String genreUrl);
+    public interface OnGenreDetailSelectListener {
+        void showGenreDetail(String genreName, String genreUrl);
     }
 }

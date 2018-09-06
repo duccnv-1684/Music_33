@@ -22,13 +22,14 @@ import com.framgia.nguyenvanducc.soundcloud33.screen.main.MainActivity;
 import java.util.List;
 
 public class SearchFragment extends BaseFragment implements SearchContract.View,
-        SearchAdapter.TrackClickListener{
+        SearchAdapter.TrackClickListener {
     private SearchContract.Presenter mPresenter;
     private RecyclerView mRecyclerTrackList;
 
     public SearchFragment() {
         TrackRepository trackRepository = TrackRepository.getInstance(
-                TrackLocalDataSource.getInstance(), TrackRemoteDataSource.getInstance());
+                TrackLocalDataSource.getInstance(getContext().getContentResolver()),
+                TrackRemoteDataSource.getInstance());
         mPresenter = new SearchPresenter(trackRepository);
     }
 
@@ -57,7 +58,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View,
 
     @Override
     public void onTrackClick(Track track) {
-        Toast.makeText(getContext(),track.getTitle(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), track.getTitle(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
