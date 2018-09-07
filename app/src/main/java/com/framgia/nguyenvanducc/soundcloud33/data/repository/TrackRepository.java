@@ -37,4 +37,9 @@ public class TrackRepository
                                    OnLoadDataCompleteListener<Track> listener) {
         mTrackRemoteDataSource.getTrackFromSearch(queryString, limit, offset, listener);
     }
+
+    @Override
+    public void getLocalTrack(OnLoadDataCompleteListener<Track> trackOnLoadDataCompleteListener) {
+        mTrackLocalDataSource.getLocalTrack(trackOnLoadDataCompleteListener);
+    }
 }

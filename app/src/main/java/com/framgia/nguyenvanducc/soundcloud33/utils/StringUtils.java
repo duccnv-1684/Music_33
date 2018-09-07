@@ -50,4 +50,11 @@ public class StringUtils {
         stringBuilder.append(BuildConfig.SOUNDCLOUD_API_KEY);
         return stringBuilder.toString();
     }
+
+    public static String buildQueryString(String argument, String condition){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(argument);
+        stringBuilder.append(condition);
+        return stringBuilder.toString();
+    }
 }

@@ -1,5 +1,8 @@
-package com.framgia.nguyenvanducc.soundcloud33.screen.main.genredetail;
+package com.framgia.nguyenvanducc.soundcloud33.screen.main.localtrack;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,53 +18,64 @@ import com.framgia.nguyenvanducc.soundcloud33.data.repository.TrackRepository;
 import com.framgia.nguyenvanducc.soundcloud33.data.source.local.TrackLocalDataSource;
 import com.framgia.nguyenvanducc.soundcloud33.data.source.remote.TrackRemoteDataSource;
 import com.framgia.nguyenvanducc.soundcloud33.screen.BaseFragment;
-import com.framgia.nguyenvanducc.soundcloud33.utils.Constants;
 
 import java.util.List;
 
-public class GenreDetailFragment extends BaseFragment implements GenreDetailContract.View,
-        GenreDetailAdapter.TrackClickListener {
-    private GenreDetailContract.Presenter mPresenter;
+public class LocalTrackFragment extends BaseFragment implements LocalTrackContract.View
+        , LocalTrackAdapter.TrackClickListener {
+    private LocalTrackContract.Presenter mPresenter;
     private RecyclerView mRecyclerTrackList;
 
-    public GenreDetailFragment() {
+    public LocalTrackFragment() {
         TrackRepository trackRepository = TrackRepository.getInstance(
                 TrackLocalDataSource.getInstance(getContext().getContentResolver()),
                 TrackRemoteDataSource.getInstance());
-        mPresenter = new GenreDetailPresenter(trackRepository);
+        mPresenter = new LocalTrackPresenter(trackRepository);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list_track, container, false);
+        return inflater.inflate(R.layout.fragment_music_on_device, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mPresenter.setView(this);
         mRecyclerTrackList = view.findViewById(R.id.recycler_list_tracks);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()
                 , LinearLayoutManager.VERTICAL, false);
         mRecyclerTrackList.setLayoutManager(linearLayoutManager);
-        assert getArguments() != null;
-        String url = getArguments().getString(Constants.ARGUMENT_GENRE_URL);
-        mPresenter.getTrack(url);
-        return view;
+        if (isGrantedPermission()) mPresenter.getLocalTrack();
+    }
+
+    private boolean isGrantedPermission() {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M
+                || getContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Override
+    public void showLocalTrack(List<Track> tracks) {
+        LocalTrackAdapter localTrackAdapter
+                = new LocalTrackAdapter(getContext(), tracks, this);
+        mRecyclerTrackList.setAdapter(localTrackAdapter);
     }
 
     @Override
     public void onTrackClick(Track track) {
+
     }
 
     @Override
     public void onFavoriteClick(Track track) {
+
     }
 
     @Override
     public void onMoreClick(Track track) {
-    }
 
-    @Override
-    public void showTrack(List<Track> tracks) {
-        GenreDetailAdapter genreDetailAdapter = new GenreDetailAdapter(getContext(), tracks, this);
-        mRecyclerTrackList.setAdapter(genreDetailAdapter);
     }
 }
