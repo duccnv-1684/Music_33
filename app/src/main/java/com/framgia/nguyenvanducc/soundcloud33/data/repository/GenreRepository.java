@@ -13,17 +13,14 @@ public class GenreRepository
     private GenreLocalDataSource mGenreLocalDataSource;
     private GenreRemoteDataSource mGenreRemoteDataSource;
 
-    private GenreRepository(GenreLocalDataSource genreLocalDataSource,
-                            GenreRemoteDataSource genreRemoteDataSource) {
-        this.mGenreLocalDataSource = genreLocalDataSource;
-        this.mGenreRemoteDataSource = genreRemoteDataSource;
+    private GenreRepository() {
+        this.mGenreLocalDataSource = GenreLocalDataSource.getInstance();
+        this.mGenreRemoteDataSource = GenreRemoteDataSource.getInstance();
     }
 
-    public static synchronized GenreRepository getInstance(
-            GenreLocalDataSource genreLocalDataSource
-            , GenreRemoteDataSource genreRemoteDataSource) {
+    public static synchronized GenreRepository getInstance() {
         if (sGenreRepository == null)
-            sGenreRepository = new GenreRepository(genreLocalDataSource, genreRemoteDataSource);
+            sGenreRepository = new GenreRepository();
         return sGenreRepository;
     }
 

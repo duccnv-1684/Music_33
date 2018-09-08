@@ -29,7 +29,7 @@ public class GetLocalTrackTask extends AsyncTask<Void, Void, List<Track>> {
     protected List<Track> doInBackground(Void... voids) {
         List<Track> tracks = new ArrayList<>();
         Uri mediaUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        String selection = StringUtils.buildQueryString(MediaStore.Audio.Media.IS_MUSIC,
+        String selection = StringUtils.buildString(MediaStore.Audio.Media.IS_MUSIC,
                 NOT_EQUAL_ZERO);
         String[] projection = {
                 MediaStore.Audio.Media._ID,
@@ -38,7 +38,7 @@ public class GetLocalTrackTask extends AsyncTask<Void, Void, List<Track>> {
                 MediaStore.Audio.Media.DATA,
                 MediaStore.Audio.Media.DURATION,
         };
-        String sortOrder = StringUtils.buildQueryString(MediaStore.Audio.Media.TITLE, ASCENDING);
+        String sortOrder = StringUtils.buildString(MediaStore.Audio.Media.TITLE, ASCENDING);
         Cursor cursor = mContentResolver.query(
                 mediaUri
                 , projection

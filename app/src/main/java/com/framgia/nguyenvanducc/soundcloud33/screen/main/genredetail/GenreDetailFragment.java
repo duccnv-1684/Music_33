@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import com.framgia.nguyenvanducc.soundcloud33.R;
 import com.framgia.nguyenvanducc.soundcloud33.data.model.Track;
 import com.framgia.nguyenvanducc.soundcloud33.data.repository.TrackRepository;
-import com.framgia.nguyenvanducc.soundcloud33.data.source.local.TrackLocalDataSource;
-import com.framgia.nguyenvanducc.soundcloud33.data.source.remote.TrackRemoteDataSource;
 import com.framgia.nguyenvanducc.soundcloud33.screen.BaseFragment;
 import com.framgia.nguyenvanducc.soundcloud33.utils.Constants;
 
@@ -25,9 +23,7 @@ public class GenreDetailFragment extends BaseFragment implements GenreDetailCont
     private RecyclerView mRecyclerTrackList;
 
     public GenreDetailFragment() {
-        TrackRepository trackRepository = TrackRepository.getInstance(
-                TrackLocalDataSource.getInstance(getContext().getContentResolver()),
-                TrackRemoteDataSource.getInstance());
+        TrackRepository trackRepository = TrackRepository.getInstance(getContext());
         mPresenter = new GenreDetailPresenter(trackRepository);
     }
 

@@ -9,8 +9,10 @@ public class StringUtils {
     private static final String CLIENT_ID_URL = "client_id";
     private static final String LIMIT_URL = "limit";
     private static final String OFFSET_URL = "offset";
+    private static final String PLAYLIST = "playlist";
     private static final char AND = '&';
     private static final char EQUAL = '=';
+
     public static String buildGetTrackByGenreUrl(String genreUrl, int limit, int offset) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(BASE_URL);
@@ -30,7 +32,8 @@ public class StringUtils {
         stringBuilder.append(offset);
         return stringBuilder.toString();
     }
-    public static String buildSearchTrackUrl(String queryString, int limit, int offset){
+
+    public static String buildSearchTrackUrl(String queryString, int limit, int offset) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(BASE_URL);
         stringBuilder.append(TRACK_SEARCH_URL);
@@ -51,10 +54,30 @@ public class StringUtils {
         return stringBuilder.toString();
     }
 
-    public static String buildQueryString(String argument, String condition){
+    public static String buildString(String... strings) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(argument);
-        stringBuilder.append(condition);
+        for (String string : strings) {
+            stringBuilder.append(string);
+        }
         return stringBuilder.toString();
+    }
+
+    public static String buildTableNameOfPlaylist(int playlistId) {
+        return buildString(PLAYLIST, String.valueOf(playlistId));
+    }
+
+    public static String buildSqlCreatePlaylistTableStatement(int playlistId) {
+        return buildString("CREATE TABLE ", buildTableNameOfPlaylist(playlistId), " (",
+                TrackEntity.ID, " INTEGER NOT NULL PRIMARY KEY, ",
+                TrackEntity.TITLE, " TEXT, ",
+                TrackEntity.ARTIST, " TEXT, ",
+                TrackEntity.ARTWORK_URL, " TEXT, ",
+                TrackEntity.FULL_DURATION, " INTEGER, ",
+                TrackEntity.IS_DOWNLOADABLE, " INTEGER, ",
+                TrackEntity.URL, " TEXT );");
+    }
+
+    public static String buildSqlDropPlaylistTableStatement(int playlistId) {
+        return buildString("DROP TABLE ", buildTableNameOfPlaylist(playlistId));
     }
 }
