@@ -17,9 +17,7 @@ import com.framgia.nguyenvanducc.soundcloud33.data.model.Track;
 import com.framgia.nguyenvanducc.soundcloud33.data.repository.GenreRepository;
 import com.framgia.nguyenvanducc.soundcloud33.data.repository.TrackRepository;
 import com.framgia.nguyenvanducc.soundcloud33.data.source.local.GenreLocalDataSource;
-import com.framgia.nguyenvanducc.soundcloud33.data.source.local.TrackLocalDataSource;
 import com.framgia.nguyenvanducc.soundcloud33.data.source.remote.GenreRemoteDataSource;
-import com.framgia.nguyenvanducc.soundcloud33.data.source.remote.TrackRemoteDataSource;
 import com.framgia.nguyenvanducc.soundcloud33.screen.BaseFragment;
 
 import java.util.List;
@@ -34,11 +32,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View
             , R.id.genre_country};
 
     public HomeFragment() {
-        TrackRepository trackRepository = TrackRepository.getInstance(
-                TrackLocalDataSource.getInstance(getContext().getContentResolver()),
-                TrackRemoteDataSource.getInstance());
-        GenreRepository genreRepository = GenreRepository.getInstance(
-                GenreLocalDataSource.getInstance(), GenreRemoteDataSource.getInstance());
+        TrackRepository trackRepository = TrackRepository.getInstance(getContext());
+        GenreRepository genreRepository = GenreRepository.getInstance();
         mPresenter = new HomePresenter(trackRepository, genreRepository);
         mPresenter.setView(this);
     }
