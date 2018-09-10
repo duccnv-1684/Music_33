@@ -2,6 +2,8 @@ package com.framgia.nguyenvanducc.soundcloud33.utils;
 
 import com.framgia.nguyenvanducc.soundcloud33.BuildConfig;
 
+import java.util.Calendar;
+
 public class StringUtils {
     private static final String BASE_URL = "https://api-v2.soundcloud.com/";
     private static final String GENRE_QUERY_URl = "charts?kind=top&genre=soundcloud%3Agenres%3A";
@@ -12,6 +14,7 @@ public class StringUtils {
     private static final String PLAYLIST = "playlist";
     private static final char AND = '&';
     private static final char EQUAL = '=';
+    private static final long BASE_TIMESTAMP = 1136073600;
 
     public static String buildGetTrackByGenreUrl(String genreUrl, int limit, int offset) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -79,5 +82,10 @@ public class StringUtils {
 
     public static String buildSqlDropPlaylistTableStatement(int playlistId) {
         return buildString("DROP TABLE ", buildTableNameOfPlaylist(playlistId));
+    }
+
+    public static int createPlaylistId() {
+        long currentTimeStamp = Calendar.getInstance().getTimeInMillis() / 1000;
+        return (int) (currentTimeStamp - BASE_TIMESTAMP);
     }
 }

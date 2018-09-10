@@ -44,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     TrackEntity.URL + " TEXT );";
     private static final String SQL_CREATE_PLAYLIST_TABLE_STATEMENT =
             "CREATE TABLE " + PLAYLIST_TABLE_NAME + " (" +
-                    PLAYLIST_ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                    PLAYLIST_ID + " INTEGER NOT NULL PRIMARY KEY, " +
                     PLAYLIST_TITLE + " TEXT );";
     private static final String SQL_CREATE_PLAYING_QUEUE_TABLE_STATEMENT =
             "CREATE TABLE " + PLAYING_QUEUE_TABLE_NAME + " (" +
@@ -294,6 +294,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Track track;
         int id = cursor.getInt(cursor.getColumnIndexOrThrow(TrackEntity.ID));
         String title = cursor.getString(cursor.getColumnIndexOrThrow(TrackEntity.TITLE));
+        String artist = cursor.getString(
+                cursor.getColumnIndexOrThrow(TrackEntity.ARTIST));
         String artwork = cursor.getString(
                 cursor.getColumnIndexOrThrow(TrackEntity.ARTWORK_URL));
         int duration = cursor.getInt(cursor.getColumnIndexOrThrow(TrackEntity.FULL_DURATION));
@@ -303,6 +305,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         track = new Track.Builder()
                 .setId(id)
                 .setTitle(title)
+                .setArtist(artist)
                 .setArtworkUrl(artwork)
                 .setDuration(duration)
                 .setUrl(url)
