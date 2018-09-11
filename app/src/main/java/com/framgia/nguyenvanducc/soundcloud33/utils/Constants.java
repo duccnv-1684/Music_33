@@ -9,6 +9,8 @@ public class Constants {
     public static final String GENRE_COUNTRY = "Country";
     public static final String NULL = "null";
     public static final String ARGUMENT_GENRE_URL = "argument_genre_url";
+    public static final String ARGUMENT_PLAYLIST_ID = "argument_playlist_id";
+    public static final String ARGUMENT_PLAYLIST_TITLE = "argument_playlist_title";
     public static final int KEY_MUSIC_ON_DEVICE = 30;
     public static final int KEY_PLAYLIST = 31;
     public static final int KEY_FAVORITE = 32;
