@@ -22,6 +22,7 @@ public class FavoriteFragment extends BaseFragment implements FavoriteContract.V
     private FavoriteContract.Presenter mPresenter;
     private RecyclerView mRecyclerTrackList;
     private FavoriteAdapter mFavoriteAdapter;
+
     public FavoriteFragment() {
     }
 
