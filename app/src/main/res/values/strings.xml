@@ -5,8 +5,9 @@
     <string name="title_home">Home</string>
     <string name="title_more">More</string>
     <string name="message_search_hint">Search song, artist, album and even more…</string>
-    <string name="music_on_this_device">Music on this Device</string>
-    <string name="playlist">Playlist</string>
-    <string name="favorite">Favorite</string>
-    <string name="downloaded">Downloaded</string>
+    <string name="title_music_on_this_device">Music on this Device</string>
+    <string name="title_playlist">Playlist</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_downloaded">Downloaded</string>
+    <string name="default_time">00:00</string>
 </resources>
