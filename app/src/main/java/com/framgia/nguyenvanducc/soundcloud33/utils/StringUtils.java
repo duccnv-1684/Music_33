@@ -16,6 +16,13 @@ public class StringUtils {
     private static final char EQUAL = '=';
     private static final long BASE_TIMESTAMP = 1136073600;
 
+    private static final String HTTP = "http";
+    private static final char COLON = ':';
+    private static final int THOUSAND = 1000;
+    private static final int SIXTY = 60;
+    private static final int TEN = 10;
+    private static final char ZERO = '0';
+
     public static String buildGetTrackByGenreUrl(String genreUrl, int limit, int offset) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(BASE_URL);
@@ -87,5 +94,21 @@ public class StringUtils {
     public static int createPlaylistId() {
         long currentTimeStamp = Calendar.getInstance().getTimeInMillis() / 1000;
         return (int) (currentTimeStamp - BASE_TIMESTAMP);
+    }
+
+    public static boolean isOnlineUrl(String url) {
+        return url == null || url.startsWith(HTTP);
+    }
+
+    public static String convertTime(int time) {
+        int second = time / THOUSAND % SIXTY;
+        int minute = time / THOUSAND / SIXTY;
+        StringBuilder stringBuilder = new StringBuilder();
+        if (minute < TEN) stringBuilder.append(ZERO);
+        stringBuilder.append(minute);
+        stringBuilder.append(COLON);
+        if (second < TEN) stringBuilder.append(ZERO);
+        stringBuilder.append(second);
+        return stringBuilder.toString();
     }
 }
