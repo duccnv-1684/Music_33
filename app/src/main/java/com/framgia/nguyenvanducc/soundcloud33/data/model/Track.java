@@ -13,6 +13,7 @@ public class Track {
     private String mDownloadUrl;
     private String mStreamUrl;
     private String mArtist;
+    private boolean mIsFavorite;
 
     private Track(Builder builder) {
         mId = builder.mId;
@@ -27,6 +28,7 @@ public class Track {
         mDownloadUrl = builder.mDownloadUrl;
         mStreamUrl = builder.mStreamUrl;
         mArtist = builder.mArtist;
+        mIsFavorite = builder.mIsFavorite;
     }
 
     public int getId() {
@@ -125,6 +127,14 @@ public class Track {
         mArtist = artist;
     }
 
+    public boolean isFavorite() {
+        return mIsFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        mIsFavorite = favorite;
+    }
+
     public static class Builder {
         private int mId;
         private int mUserId;
@@ -138,7 +148,7 @@ public class Track {
         private String mDownloadUrl;
         private String mStreamUrl;
         private String mArtist;
-
+        private boolean mIsFavorite;
 
         public Builder setId(int id) {
             mId = id;
@@ -196,6 +206,11 @@ public class Track {
         }
         public Builder setArtist(String artist) {
             mArtist = artist;
+            return this;
+        }
+
+        public Builder setFavorite(boolean favorite) {
+            mIsFavorite = favorite;
             return this;
         }
 

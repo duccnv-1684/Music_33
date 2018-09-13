@@ -9,12 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.framgia.nguyenvanducc.soundcloud33.R;
 import com.framgia.nguyenvanducc.soundcloud33.data.model.Track;
 import com.framgia.nguyenvanducc.soundcloud33.data.repository.TrackRepository;
 import com.framgia.nguyenvanducc.soundcloud33.screen.BaseFragment;
 import com.framgia.nguyenvanducc.soundcloud33.utils.Constants;
+import com.framgia.nguyenvanducc.soundcloud33.utils.EndlessRecyclerViewScrollListener;
 
 import java.util.List;
 
@@ -23,8 +25,14 @@ public class GenreDetailFragment extends BaseFragment implements GenreDetailCont
     public static final String TAG = "genre_detail";
     private GenreDetailContract.Presenter mPresenter;
     private RecyclerView mRecyclerTrackList;
+    private GenreDetailAdapter mGenreDetailAdapter;
 
     public GenreDetailFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -49,26 +57,54 @@ public class GenreDetailFragment extends BaseFragment implements GenreDetailCont
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()
                 , LinearLayoutManager.VERTICAL, false);
         mRecyclerTrackList.setLayoutManager(linearLayoutManager);
+        mGenreDetailAdapter = new GenreDetailAdapter(getContext(), this);
+        mRecyclerTrackList.setAdapter(mGenreDetailAdapter);
         assert getArguments() != null;
-        String url = getArguments().getString(Constants.ARGUMENT_GENRE_URL);
+        final String url = getArguments().getString(Constants.ARGUMENT_GENRE_URL);
         mPresenter.getTrack(url);
+        EndlessRecyclerViewScrollListener scrollListener
+                = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                mPresenter.getTrack(url);
+            }
+        };
+        mRecyclerTrackList.addOnScrollListener(scrollListener);
     }
 
     @Override
-    public void onTrackClick(Track track) {
+    public void onTrackClick(int track) {
+
     }
 
     @Override
-    public void onFavoriteClick(Track track) {
+    public void onFavoriteClick(int position) {
+        mPresenter.favoriteTrack(position);
     }
 
     @Override
-    public void onMoreClick(Track track) {
+    public void onDownloadClick(int position) {
+        mPresenter.downloadTrack(position);
     }
 
     @Override
     public void showTrack(List<Track> tracks) {
-        GenreDetailAdapter genreDetailAdapter = new GenreDetailAdapter(getContext(), tracks, this);
-        mRecyclerTrackList.setAdapter(genreDetailAdapter);
+        mGenreDetailAdapter.addData(tracks);
+    }
+
+    @Override
+    public void updateFavorite(int position) {
+        mGenreDetailAdapter.updateFavorite(position);
+    }
+
+    @Override
+    public void downloadTrack(boolean isDownloadable, Track track) {
+        if (!isDownloadable) {
+            Toast.makeText(getContext()
+                    , getString(R.string.msg_cant_download), Toast.LENGTH_SHORT).show();
+        } else {
+            // TODO: 9/12/18 Handle download track
+            Toast.makeText(getContext(), getString(R.string.msg_downloading), Toast.LENGTH_SHORT).show();
+        }
     }
 }
