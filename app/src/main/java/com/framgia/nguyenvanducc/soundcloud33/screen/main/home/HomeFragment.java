@@ -1,5 +1,6 @@
 package com.framgia.nguyenvanducc.soundcloud33.screen.main.home;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,6 +25,7 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment implements HomeContract.View
         , HomeAdapter.TrackClickListener {
+    public static final String TAG = "home_fragment";
     private HomeContract.Presenter mPresenter;
     private OnGenreDetailSelectListener mOnGenreDetailSelectListener;
     private View mView;
@@ -32,24 +34,31 @@ public class HomeFragment extends BaseFragment implements HomeContract.View
             , R.id.genre_country};
 
     public HomeFragment() {
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
         TrackRepository trackRepository = TrackRepository.getInstance(getContext());
         GenreRepository genreRepository = GenreRepository.getInstance();
         mPresenter = new HomePresenter(trackRepository, genreRepository);
-        mPresenter.setView(this);
-    }
-
-    public void setOnGenreDetailSelectListener(OnGenreDetailSelectListener listener) {
-        this.mOnGenreDetailSelectListener = listener;
+        mOnGenreDetailSelectListener = (OnGenreDetailSelectListener) context;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater
             , @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        if (mView != null) return mView;
+        return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         this.mView = view;
+        mPresenter.setView(this);
         mPresenter.getAllGenre();
-        return view;
     }
 
     @Override

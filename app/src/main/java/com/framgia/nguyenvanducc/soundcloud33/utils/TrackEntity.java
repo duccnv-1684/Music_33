@@ -9,7 +9,8 @@ import android.support.annotation.StringDef;
         TrackEntity.ARTWORK_URL,
         TrackEntity.FULL_DURATION,
         TrackEntity.URL,
-        TrackEntity.IS_DOWNLOADABLE
+        TrackEntity.IS_DOWNLOADABLE,
+        TrackEntity.DOWNLOAD_URL
 })
 
 public @interface TrackEntity {
@@ -20,4 +21,5 @@ public @interface TrackEntity {
     String FULL_DURATION = "duration";
     String URL = "url";
     String IS_DOWNLOADABLE = "is_downloadable";
+    String DOWNLOAD_URL = "download_url";
 }

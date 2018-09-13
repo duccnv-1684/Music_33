@@ -21,6 +21,7 @@ import java.util.List;
 
 public class PlaylistDetailFragment extends BaseFragment implements PlaylistDetailContract.View,
         PlaylistDetailAdapter.TrackClickListener {
+    public static final String TAG = "playlist_detail";
     private PlaylistDetailContract.Presenter mPresenter;
     private RecyclerView mRecyclerTracks;
     private PlaylistDetailAdapter mAdapter;

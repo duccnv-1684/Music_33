@@ -20,29 +20,35 @@ import java.util.List;
 
 public class SearchFragment extends BaseFragment implements SearchContract.View,
         SearchAdapter.TrackClickListener {
+    public static final String TAG = "search_fragment";
     private SearchContract.Presenter mPresenter;
     private RecyclerView mRecyclerTrackList;
 
     public SearchFragment() {
-        TrackRepository trackRepository = TrackRepository.getInstance(getContext());
-        mPresenter = new SearchPresenter(trackRepository);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        TrackRepository trackRepository = TrackRepository.getInstance(getContext());
+        mPresenter = new SearchPresenter(trackRepository);
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_search, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container
+            , @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_search, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mPresenter.setView(this);
         mRecyclerTrackList = view.findViewById(R.id.recycler_list_tracks);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()
                 , LinearLayoutManager.VERTICAL, false);
         mRecyclerTrackList.setLayoutManager(linearLayoutManager);
-        return view;
     }
 
     @Override
@@ -64,4 +70,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View,
     public void onMoreClick(Track track) {
     }
 
+    public void querySubmit(String queryString){
+        mPresenter.searchTrack(queryString);
+    }
 }

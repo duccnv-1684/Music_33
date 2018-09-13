@@ -19,6 +19,7 @@ import java.util.List;
 
 public class DownloadedFragment extends BaseFragment implements DownloadedContract.View,
         DownloadedAdapter.TrackClickListener {
+    public static final String TAG = "download";
     private DownloadedContract.Presenter mPresenter;
     private RecyclerView mRecyclerTracks;
 

@@ -32,6 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     TrackEntity.ARTWORK_URL + " TEXT, " +
                     TrackEntity.FULL_DURATION + " INTEGER, " +
                     TrackEntity.IS_DOWNLOADABLE + " INTEGER, " +
+                    TrackEntity.DOWNLOAD_URL + " TEXT, " +
                     TrackEntity.URL + " TEXT );";
     private static final String SQL_CREATE_FAVORITE_TABLE_STATEMENT =
             "CREATE TABLE " + FAVORITE_TABLE_NAME + " (" +
@@ -41,6 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     TrackEntity.ARTWORK_URL + " TEXT, " +
                     TrackEntity.FULL_DURATION + " INTEGER, " +
                     TrackEntity.IS_DOWNLOADABLE + " INTEGER, " +
+                    TrackEntity.DOWNLOAD_URL + " TEXT, " +
                     TrackEntity.URL + " TEXT );";
     private static final String SQL_CREATE_PLAYLIST_TABLE_STATEMENT =
             "CREATE TABLE " + PLAYLIST_TABLE_NAME + " (" +
@@ -54,6 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     TrackEntity.ARTWORK_URL + " TEXT, " +
                     TrackEntity.FULL_DURATION + " INTEGER, " +
                     TrackEntity.IS_DOWNLOADABLE + " INTEGER, " +
+                    TrackEntity.DOWNLOAD_URL + " TEXT, " +
                     TrackEntity.URL + " TEXT );";
     private static final String SQL_DROP_PLAYING_QUEUE_TABLE_STATEMENT =
             "DROP TABLE " + PLAYING_QUEUE_TABLE_NAME;
@@ -302,6 +305,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String url = cursor.getString(cursor.getColumnIndexOrThrow(TrackEntity.URL));
         boolean isDownloadable = (cursor.getInt(
                 cursor.getColumnIndexOrThrow(TrackEntity.IS_DOWNLOADABLE)) != 0);
+        String downloadUrl = isDownloadable ?
+                cursor.getString(cursor.getColumnIndexOrThrow(TrackEntity.DOWNLOAD_URL)) : null;
         track = new Track.Builder()
                 .setId(id)
                 .setTitle(title)
@@ -310,6 +315,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 .setDuration(duration)
                 .setUrl(url)
                 .setDownloadable(isDownloadable)
+                .setDownloadUrl(downloadUrl)
                 .build();
         return track;
     }
@@ -334,6 +340,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(TrackEntity.FULL_DURATION, track.getDuration());
         values.put(TrackEntity.URL, track.getUrl());
         values.put(TrackEntity.IS_DOWNLOADABLE, track.isDownloadable());
+        values.put(TrackEntity.IS_DOWNLOADABLE, track.getDownloadUrl());
         return values;
     }
 }
