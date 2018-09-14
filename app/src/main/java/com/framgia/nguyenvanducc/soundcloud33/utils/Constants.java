@@ -19,4 +19,5 @@ public class Constants {
     public static final int KEY_FAVORITE = 32;
     public static final int KEY_DOWNLOADED = 33;
     public static final int INVALID_INDEX = -1;
+    public static final float SEARCH_HINT_TEXT_SIZE = 16f;
 }

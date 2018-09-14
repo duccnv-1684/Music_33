@@ -19,6 +19,7 @@ import java.util.List;
 
 public class FavoriteFragment extends BaseFragment implements FavoriteContract.View,
         FavoriteAdapter.TrackClickListener {
+    public static final String TAG = "favorite";
     private FavoriteContract.Presenter mPresenter;
     private RecyclerView mRecyclerTrackList;
     private FavoriteAdapter mFavoriteAdapter;

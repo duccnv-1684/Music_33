@@ -21,6 +21,7 @@ import java.util.List;
 
 public class LocalTrackFragment extends BaseFragment implements LocalTrackContract.View
         , LocalTrackAdapter.TrackClickListener {
+    public static final String TAG = "local_track";
     private LocalTrackContract.Presenter mPresenter;
     private RecyclerView mRecyclerTrackList;
 

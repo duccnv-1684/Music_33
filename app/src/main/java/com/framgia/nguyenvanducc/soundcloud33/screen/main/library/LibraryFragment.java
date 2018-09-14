@@ -1,5 +1,6 @@
 package com.framgia.nguyenvanducc.soundcloud33.screen.main.library;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,25 +14,32 @@ import com.framgia.nguyenvanducc.soundcloud33.screen.BaseFragment;
 
 public class LibraryFragment extends BaseFragment implements LibraryContract.View,
         View.OnClickListener {
+    public static final String TAG = "library_fragment";
     private LibraryContract.Presenter mPresenter;
     private OnItemSelected mOnItemSelected;
 
     public LibraryFragment() {
-        mPresenter = new LibraryPresenter();
     }
 
-    public void setOnItemSelected(OnItemSelected onItemSelected) {
-        mOnItemSelected = onItemSelected;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mPresenter = new LibraryPresenter();
+        mOnItemSelected = (OnItemSelected) context;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_library, container, false);
+        return inflater.inflate(R.layout.fragment_library, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mPresenter.setView(this);
         setUpView(view);
-        return view;
     }
 
     @Override
